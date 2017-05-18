@@ -1,0 +1,28 @@
+{
+  "name": "workshop1",
+  "version": "0.0.0",
+  "description": "Agenda\r --------------",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.10.1",
+    "express": "~3.4.8",
+    "jwt-simple": "^0.5.1",
+    "moment": "~2.5.1",
+    "mongoose": "^4.4.15"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hmkdig/workshop1.git"
+  },
+  "author": "Dywayne Johnson (djohnsonkc@gmail.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hmkdig/workshop1/issues"
+  },
+  "homepage": "https://github.com/hmkdig/workshop1"
+}

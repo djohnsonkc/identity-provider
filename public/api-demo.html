@@ -1,0 +1,455 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/images/favicon.ico">
+
+    <title>Developer Workshop 1 - API</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="/themes/startbootstrap-bare-1.0.1/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- this is where we override bootstrap.min.css and cover.css as needed -->
+    <link href="/themes/startbootstrap-bare-1.0.1/css/custom.css" rel="stylesheet">
+
+    <style>
+
+    .btn 
+    {
+        width: 200px;
+    }
+
+    </style>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/"><i class="glyphicon glyphicon-flash"></i> Developer Workshop1</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    <li>
+                        <a href="/register">Register</a>
+                    </li>
+                    <li>
+                        <a href="/login">Login</a>
+                    </li>
+                    <li>
+                        <a href="/api-demo">API</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+
+
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+
+				<h2>Account API Methods</h2>
+				<p>Click the buttons below to test the RESTful API methods using HTTP GET, POST, PUT and DELETE verbs. For a more robust way of testing your API methods, check out the <a href="https://chrome.google.com/webstore/detail/postman-rest-client/fdmmgilgnpjigdojojpjoooidkmcomcm" target="_blank">Postman - REST Client</a> for Google Chrome</p>
+            
+                <p><button id='get-all-link' class="btn btn-success">1) GET v1/accounts</button>  <a href="/api/v1/accounts" target="_blank">Try from your browser</a></p>
+                <p><button id='get-specific-link' class="btn btn-success">2) GET v1/accounts/{id}</button> <i class="glyphicon glyphicon-flash"></i></p>
+                <p><button id='put-link' class="btn btn-success">3) PUT v1/accounts/{id}</button> <i class="glyphicon glyphicon-flash"></i></p>
+                <p><button id='delete-link' class="btn btn-success">4) DELETE v1/accounts/{id}</button> <i class="glyphicon glyphicon-flash"></i></p>
+
+                <p><i class="glyphicon glyphicon-flash"></i> These methods require an ID to be entered below.</p>
+
+                <form class="form-horizontal" action="" method="POST">
+                  <fieldset>
+                    <!--
+                    <div id="legend">
+                      <legend class="">Register</legend>
+                    </div>
+                    -->
+
+                    <div class="control-group">
+                      <!-- Username -->
+                      <label class="control-label" for="id">ID</label>
+                      <div class="controls">
+                        <input type="text" id="id" name="id" placeholder="" class="input-xlarge" readonly>
+                        <p class="help-block">First name can contain any letters or numbers, without spaces</p>
+                      </div>
+                    </div>
+
+                    <div class="control-group">
+                      <!-- Username -->
+                      <label class="control-label" for="first_name">First Name</label>
+                      <div class="controls">
+                        <input type="text" id="first_name" name="first_name" placeholder="" class="input-xlarge">
+                        <p class="help-block">First name can contain any letters or numbers, without spaces</p>
+                      </div>
+                    </div>
+                 
+                    <div class="control-group">
+                      <!-- Username -->
+                      <label class="control-label" for="last_name">Last Name</label>
+                      <div class="controls">
+                        <input type="text" id="last_name" name="last_name" placeholder="" class="input-xlarge">
+                        <p class="help-block">Last name can contain any letters or numbers, without spaces</p>
+                      </div>
+                    </div>
+
+                    <div class="control-group">
+                      <!-- Username -->
+                      <label class="control-label" for="user_name">User Name</label>
+                      <div class="controls">
+                        <input type="text" id="user_name" name="user_name" placeholder="" class="input-xlarge" readonly>
+                        <p class="help-block">User name can contain any letters or numbers, without spaces</p>
+                      </div>
+                    </div>
+
+                    <div class="control-group">
+                      <!-- E-mail -->
+                      <label class="control-label" for="email">E-mail</label>
+                      <div class="controls">
+                        <input type="text" id="email" name="email" placeholder="" class="input-xlarge">
+                        <p class="help-block">Please provide your E-mail</p>
+                      </div>
+                    </div>
+                 
+                    <div class="control-group">
+                      <!-- Password-->
+                      <label class="control-label" for="password">Password</label>
+                      <div class="controls">
+                        <input type="password" id="password" name="password" placeholder="" class="input-xlarge">
+                        <p class="help-block">Password should be at least 4 characters</p>
+                      </div>
+                    </div>
+                 
+                 
+
+                  </fieldset>
+                </form>
+
+
+
+					
+            </div>        
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+
+                    <div class="title js-scroll-top">
+                        <h2>See the API response below</h2>
+                        <p><strong>PLEASE NOTE:</strong> this API method is returning more than it should such as password, etc., but is there for demonstration purposes</p>
+                    </div>
+
+                    <pre id="json-result">
+                        
+                    </pre>
+
+
+            </div>
+
+
+
+		</div>
+
+	</div>
+
+
+</body>
+
+<!-- jQuery Version 1.11.1 -->
+<script src="/scripts/libs/jquery-2.1.1.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/scripts/libs/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+
+$("#get-all-link").click(function (e) {
+    e.preventDefault();
+    getAllRequest();
+});
+$("#get-specific-link").click(function (e) {
+    e.preventDefault();
+    getSpecificRequest($("#id").val());
+});
+$("#post-link").click(function (e) {
+    e.preventDefault();
+    postRequest();
+});
+$("#put-link").click(function (e) {
+    e.preventDefault();
+    putRequest($("#id").val());
+});
+$("#delete-link").click(function (e) {
+    e.preventDefault();
+    deleteRequest($("#id").val());
+});
+// $("#delete-all-link").click(function (e) {
+//     e.preventDefault();
+//     deleteAll();
+// });
+
+function getAllRequest() {
+    $.ajax({
+        url: '/api/v1/accounts/',
+        dataType: 'json',
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            //alert("SUCCESS: " + JSON.stringify(data));
+            $("#json-result").html(syntaxHighlight(JSON.stringify(data, undefined, 4)));
+            
+            $("#id").val(data[0]._id);
+            $("#user_name").val(data[0].user_name);
+            //$("#password").val(data[0].password); //hashed, so useless here...
+            $("#first_name").val(data[0].first_name);
+            $("#last_name").val(data[0].last_name);
+            $("#email").val(data[0].emails[0].address);
+            
+
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            //alert("ERROR: " + JSON.stringify(xhr));
+            //alert("ERROR: " + xhr.status);
+            $("#json-result").html(syntaxHighlight(JSON.stringify(xhr.status, undefined, 4)));
+        }
+    });
+
+    $('html, body').animate({
+            scrollTop: $(".js-scroll-top").offset().top
+        }, 1000);
+
+}
+
+function getSpecificRequest(objectid) {
+    $.ajax({
+        url: '/api/v1/accounts/' + objectid,
+        dataType: 'json',
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            //alert("SUCCESS: " + JSON.stringify(data));
+            $("#json-result").html(syntaxHighlight(JSON.stringify(data, undefined, 4)));
+            
+            $("#id").val(data._id);
+            $("#user_name").val(data.user_name);
+            //$("#password").val(data.password); //hashed, so useless here...
+            $("#first_name").val(data.first_name);
+            $("#last_name").val(data.last_name);
+            $("#email").val(data.emails[0].address);
+
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            //alert("ERROR: " + JSON.stringify(xhr));
+            //alert("ERROR: " + xhr.status);
+            //$("#json-result").html(syntaxHighlight(JSON.stringify(xhr, undefined, 4)));
+            //instead of showing the HTTP status, show the API's actual response that rides inside of the xhr.responseText
+			//$("#json-result").html(syntaxHighlight(JSON.parse(xhr.responseText)));
+            $("#json-result").html(syntaxHighlight(JSON.stringify(xhr.status, undefined, 4)));
+        }
+    });
+
+    $('html, body').animate({
+            scrollTop: $(".js-scroll-top").offset().top
+        }, 1000);
+
+}
+
+//this is handled by /api/v1/accounts/register and the /register page
+/*
+function postRequest() {
+
+    var data = JSON.stringify(
+
+            {
+
+                "first_name": $("#first_name").val(),
+                "last_name": $("#last_name").val(),
+                "email": $("#email").val(),
+                "user_name": $("#user_name").val(),
+                "password": $("#password").val()
+
+            }
+
+    );
+
+
+    var request = $.ajax({
+        url: '/v1/accounts/',
+        type: "POST",
+        data: data,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            //alert("SUCCESS: " + JSON.stringify(data));
+            $("#json-result").html(syntaxHighlight(JSON.stringify(data, undefined, 4)));
+            
+            //$("#msg").html("Use the id property to test the GET, PUT and DELETE methods");
+            
+            $("#id").val(data._id);
+
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+        	
+            //console.log("ERROR: " + JSON.stringify(xhr));
+            //alert("ERROR: " + xhr.status);
+            //$("#json-result").html(syntaxHighlight(JSON.stringify(xhr, undefined, 4)));
+            //instead of showing the HTTP status, show the API's actual response that rides inside of the xhr.responseText
+			//$("#json-result").html(syntaxHighlight(JSON.parse(xhr.responseText)));
+            $("#json-result").html(syntaxHighlight(JSON.stringify(xhr.status, undefined, 4)));
+        }
+    });
+
+}
+*/
+
+function putRequest(objectid) {
+
+    if($("#password").val() == "") {
+        alert("Please enter a new password");
+        return;
+    }
+
+    var data = JSON.stringify(
+
+            {
+
+                "first_name": $("#first_name").val(),
+                "last_name": $("#last_name").val(),
+                "email": $("#email").val(),
+                "password": $("#password").val()
+
+            }
+
+    );
+
+    var request = $.ajax({
+        url: '/api/v1/accounts/' + objectid,
+        type: "PUT",
+        data: data,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            //alert("SUCCESS: " + JSON.stringify(data));
+            $("#json-result").html(syntaxHighlight(JSON.stringify(data, undefined, 4)));
+
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            //alert("ERROR: " + JSON.stringify(xhr));
+            //alert("ERROR: " + xhr.status);
+            //$("#json-result").html(syntaxHighlight(JSON.stringify(xhr, undefined, 4)));
+            //instead of showing the HTTP status, show the API's actual response that rides inside of the xhr.responseText
+			//$("#json-result").html(syntaxHighlight(JSON.parse(xhr.responseText)));
+            $("#json-result").html(syntaxHighlight(JSON.stringify(xhr.status, undefined, 4)));
+        }
+    });
+
+    /*
+     request.done(function (msg) {
+     alert("DONE: " + msg);
+     });
+
+     request.fail(function (jqXHR, textStatus) {
+     alert("Request failed: " + textStatus);
+     });
+     */
+
+    $('html, body').animate({
+            scrollTop: $(".js-scroll-top").offset().top
+        }, 1000);
+
+}
+
+
+function deleteRequest(objectid) {
+
+    var request = $.ajax({
+        url: '/api/v1/accounts/' + objectid,
+        type: "DELETE",
+        dataType: "json",
+        success: function (data) {
+            //alert("SUCCESS: " + JSON.stringify(data));
+            $("#json-result").html(syntaxHighlight(JSON.stringify(data, undefined, 4)));
+
+
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            //alert("ERROR: " + JSON.stringify(xhr));
+            //alert("ERROR: " + xhr.status);
+            //$("#json-result").html(syntaxHighlight(JSON.stringify(xhr, undefined, 4)));
+            //instead of showing the HTTP status, show the API's actual response that rides inside of the xhr.responseText
+			//$("#json-result").html(syntaxHighlight(JSON.parse(xhr.responseText)));
+			$("#json-result").html(syntaxHighlight(JSON.stringify(xhr.status, undefined, 4)));
+        }
+    });
+
+
+    $('html, body').animate({
+            scrollTop: $(".js-scroll-top").offset().top
+        }, 1000);
+
+}
+
+
+
+function syntaxHighlight(json) {
+    if (typeof json != 'string') {
+        json = JSON.stringify(json, undefined, 2);
+    }
+    json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+        var cls = 'number';
+        if (/^"/.test(match)) {
+            if (/:$/.test(match)) {
+                cls = 'key';
+            } else {
+                cls = 'string';
+            }
+        } else if (/true|false/.test(match)) {
+            cls = 'boolean';
+        } else if (/null/.test(match)) {
+            cls = 'null';
+        }
+        return '<span class="' + cls + '">' + match + '</span>';
+    });
+}
+
+
+</script>
+
+
+</html>
