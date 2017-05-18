@@ -1,7 +1,11 @@
 ﻿
 let mongoose = require('mongoose');
 
-let dbURI = 'mongodb://djohnsonkc:demo1234@ds133340.mlab.com:33340/identity';
+let user_name = process.env.MLAB_USER_NAME || "djohnsonkc"
+let password = process.env.MLAB_PASSWORD || "demo1234"
+
+//let dbURI = 'mongodb://djohnsonkc:1234@ds133340.mlab.com:33340/identity';
+let dbURI = 'mongodb://' + user_name + ':' + password + '@ds133340.mlab.com:33340/identity';
 
 let db = mongoose.connection;
 
