@@ -35,9 +35,13 @@ app.get("/", (req, res) => {
 //**************************************************************************************
 //* REST API endpoints
 //**************************************************************************************
-app.post('/api/v1/accounts/register', accounts.register);
-app.post('/api/v1/accounts/login', accounts.login);
-app.get('/api/v1/accounts', jwt_security.verifyToken, accounts.getAll);
+app.post('/api/v1/accounts', accounts.register);
+// a bit redundant having user name in the route as well as the JSON request, 
+// but I needed a way to distinguish this route
+app.post('/api/v1/accounts/:user_name', accounts.login); 
+// not supported
+//app.get('/api/v1/accounts', jwt_security.verifyToken, accounts.getAll);
+// these methods require an access token
 app.get('/api/v1/accounts/:id', jwt_security.verifyToken, accounts.getById);
 app.put('/api/v1/accounts/:id', jwt_security.verifyToken, accounts.update);
 app.delete('/api/v1/accounts/:id', jwt_security.verifyToken, accounts.delete);
