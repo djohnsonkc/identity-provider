@@ -24,6 +24,13 @@ app.use(function(req, res, next) {
   next();
 });
 
+app.get("/", (req, res) => {
+  res.status(200).send({ 
+    message: "Welcome!", 
+    details: " This is a simple JWT-based identity provider solution using Node, Express, and MongoDB.", 
+    tags: ["RESTful API", "Node", "express", "mongoose", "body-parser", "jwt-simple"]
+  })
+});
 
 //**************************************************************************************
 //* REST API endpoints
