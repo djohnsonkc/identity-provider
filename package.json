@@ -1,7 +1,7 @@
 {
-  "name": "workshop1",
-  "version": "0.0.0",
-  "description": "Agenda\r --------------",
+  "name": "identity-provider",
+  "version": "0.0.1",
+  "description": "A simple JWT-based identity provider solution using Node, Express, and MongoDB",
   "main": "app.js",
   "dependencies": {
     "body-parser": "^1.10.1",
@@ -17,12 +17,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/hmkdig/workshop1.git"
+    "url": "https://github.com/djohnsonkc/identity-provider.git"
   },
   "author": "Dywayne Johnson (djohnsonkc@gmail.com)",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/hmkdig/workshop1/issues"
+    "url": "https://github.com/djohnsonkc/identity-provider/issues"
   },
-  "homepage": "https://github.com/hmkdig/workshop1"
+  "homepage": "https://github.com/djohnsonkc/identity-provider"
 }
