@@ -42,7 +42,7 @@ app.post('/api/v1/accounts/:email', accounts.login);
 // not supported
 //app.get('/api/v1/accounts', jwt_security.verifyToken, accounts.getAll);
 // these methods require an access token
-app.get('/api/v1/accounts/:id', jwt_security.verifyToken, accounts.getById);
+app.get('/api/v1/accounts', jwt_security.verifyToken, accounts.getByAccessToken);
 app.put('/api/v1/accounts/:id', jwt_security.verifyToken, accounts.update);
 app.delete('/api/v1/accounts/:id', jwt_security.verifyToken, accounts.delete);
 

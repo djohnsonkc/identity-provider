@@ -40,7 +40,7 @@ Update:
 
 exports.register = function (req, res) {
 
-    //console.log('Register: ' + JSON.stringify(req.body));
+    console.log('Register: ' + JSON.stringify(req.body));
 
     Account.findOne({ email: req.body.email }, function (err, data) {
 
@@ -134,11 +134,11 @@ exports.getAll = function (req, res) {
 };
 
 //example request /v1/accounts/:id
-exports.getById = function (req, res) {
+exports.getByAccessToken = function (req, res) {
 
-    //console.log('Retrieving id: ' + req.params.id);
 
-    Account.findById(req.params.id, function (err, account) {
+    // make sure and fetch by the token issuer account_id value
+    Account.findById(req.access_token_issuer.account_id, function (err, account) {
 
         if (err) {
             res.send(500, { message: "Error", error: err } );
