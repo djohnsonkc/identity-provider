@@ -9,17 +9,17 @@ let jwt_security = require('../lib/jwt-security');
 Register:
 
 {
-    "user_name": "djohnsonkc",
+    "email": "djohnsonkc@gmail.com"
     "password": "1234",
     "first_name": "Dywayne",
-    "last_name": "Johnson",
-    "email": "djohnsonkc@gmail.com"
+    "last_name": "Johnson"
+    
 }
 
 Login:
 
 {
-    "user_name": "djohnsonkc",
+    "email": "djohnsonkc@gmail.com"
     "password": "1234"
 }
 
@@ -27,11 +27,10 @@ Login:
 Update:
 
 {
-    "user_name": "djohnsonkc",
+    "email": "djohnsonkc@gmail.com"
     "password": "2345",
     "first_name": "Dywayne 'Not The Rock'",
-    "last_name": "Johnson",
-    "email": "djohnsonkc@gmail.com"
+    "last_name": "Johnson"
 }
 
 
@@ -43,7 +42,7 @@ exports.register = function (req, res) {
 
     //console.log('Register: ' + JSON.stringify(req.body));
 
-    Account.findOne({ user_name: req.body.user_name }, function (err, data) {
+    Account.findOne({ email: req.body.email }, function (err, data) {
 
         //console.log("data: " + JSON.stringify(data))
         if (err) {
@@ -52,18 +51,17 @@ exports.register = function (req, res) {
         else if (data != null ) {
             // The HTTP status code for this scenario is very subjective: Draw your own conclusion
             // According to RFC 7231, a 303 See Other MAY be used If the result of processing a POST would be equivalent to a representation of an existing resource.
-            res.send(303, { status: 303, message: 'User name already exists' });
+            res.send(303, { status: 303, message: 'Email address already in use' });
         }
         else if (data == null) {
 
             let _now = new Date();
 
             let account_data = {
-                user_name: req.body.user_name,
+                email: req.body.email,
                 password: utils.passwordHash(req.body.password),
                 first_name: req.body.first_name,
                 last_name: req.body.last_name,
-                email: req.body.email,
                 created_at: _now,
                 updated_at: _now
                 
@@ -73,12 +71,12 @@ exports.register = function (req, res) {
                
                 account.save(function (err, data) {
                     if (err) {
-                        res.send(500, { status: 500, message: "Error", error: err } );
+                        res.send(500, { message: "Error", error: err } );
                     }
                     else {                     
                         
                         let token = jwt_security.generateToken(account)
-                        res.send(200, { status: 200, message: 'account created successfully', access_token: token.access_token, expires_in: token.expires_in });
+                        res.send(200, { message: 'account created successfully', access_token: token.access_token, expires_in: token.expires_in });
 
                     }
                 });
@@ -92,24 +90,24 @@ exports.login = function (req, res) {
 
     //console.log('Login: ' + JSON.stringify(req.body));
 
-    Account.findOne({ user_name: req.body.user_name }, function (err, account) {
+    Account.findOne({ email: req.body.email }, function (err, account) {
         if (err) {
-            res.send(500, { status: 500, message: "Error", error: err } );
+            res.send(500, { message: "Error", error: err } );
         }
         else if (account == null) {
             //res.send(404, { status: 404, message: 'Not Found', details: 'account not found for user name' });
             //lets not reveal whether or not an account exists in our system for a specific user name
-            res.send(401, { status: 401, message: 'Unauthorized', details: 'invalid user name and/or password' });
+            res.send(401, { message: 'Unauthorized', details: 'invalid user name and/or password' });
         }
         else {
             if (account.password == utils.passwordHash(req.body.password)) {
 
                 let token = jwt_security.generateToken(account)
 
-                res.send(200, { status: 200, message: 'login successful', access_token: token.access_token, expires_in: token.expires_in });
+                res.send(200, { message: 'login successful', access_token: token.access_token, expires_in: token.expires_in });
             }
             else {
-                res.send(401, { status: 401, message: 'Unauthorized', details: 'invalid user name and/or password' });
+                res.send(401, { message: 'Unauthorized', details: 'invalid user name and/or password' });
             }
         }
     });
@@ -124,7 +122,7 @@ exports.getAll = function (req, res) {
     })
     //.skip(offset)
     //.limit(count)
-    //.select('_id user_name first_name last_name emails._id emails.address emails.primary')
+    //.select('_id email first_name last_name emails._id emails.address emails.primary')
     //.where('some_attribute').equals(req.params.some_value)
     .sort({last_name: 'asc', first_name: 'asc'})
     .exec(function (err, docs) {
@@ -143,10 +141,10 @@ exports.getById = function (req, res) {
     Account.findById(req.params.id, function (err, account) {
 
         if (err) {
-            res.send(500, { status: 500, message: "Error", error: err } );
+            res.send(500, { message: "Error", error: err } );
         }
         else if (account == null) {
-            res.send(404, { status: 404, message: 'not found' });
+            res.send(404, { message: 'not found' });
         }
         else {
             res.send(account);
@@ -170,7 +168,7 @@ exports.update = function (req, res) {
 
     Account.findById(req.params.id, function (err, account) {
         if (err) {
-            res.send(500, { status: 500, message: "Error", error: err } );
+            res.send(500, { message: "Error", error: err } );
         }
         else {
 
@@ -179,7 +177,6 @@ exports.update = function (req, res) {
             //allow specific properties to be updated
             account.first_name = req.body.first_name;
             account.last_name = req.body.last_name;
-            account.email = req.body.email;
             account.password = utils.passwordHash(req.body.password);
             account.updated_at = _now;
 
@@ -187,11 +184,11 @@ exports.update = function (req, res) {
 
             account.save(function (err, data) {
                 if (err) {
-                    res.send(500, { status: 500, message: "Error", error: err } );
+                    res.send(500, { message: "Error", error: err } );
                 }
                 else {
 
-                    res.send(200, { status: 200, message: 'update successful' });
+                    res.send(200, { message: 'update successful' });
 
                 }
             });
@@ -210,10 +207,10 @@ exports.delete = function (req, res) {
         console.log('err: ' + err);
 
         if (err) {
-            res.send(500, { status: 500, message: "Error", error: err } );
+            res.send(500, { message: "Error", error: err } );
         }
         else {
-            res.send(200, { status: 200, message: 'delete successful' });
+            res.send(200, { message: 'delete successful' });
         }
     });
 
